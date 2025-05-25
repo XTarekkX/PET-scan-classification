@@ -43,29 +43,71 @@ The model is built on the **InceptionResNetV2** architecture with **RadImageNet 
 
 > 🏥 The dataset was **manually collected** from a hospital in **Egypt**, consisting of real-life PET scan images.
 
-> ✍️ All labels were **manually annotated** by the research team using medical knowledge and tools.
-
 > ⚠️ **Disclaimer**:
-> - The annotations were **not fully performed by licensed medical professionals**.
+> - The annotations and labeling were **not fully performed by licensed medical professionals (some are)**.
 > - This dataset is intended for **academic and research purposes only**.
-> - Any clinical usage, redistribution, or commercial use is **prohibited**.
+> - Any clinical usage, redistribution, or commercial use is **strictly prohibited**.
 
 ---
 
 ## ⚙️ Training Configuration
 
-- **Loss Function**: Weighted Categorical **Focal Loss**  
-  > Custom α = `[0.5, 0.3, 0.2]`, γ = `2.0`
-- **Optimizer**: Adam
-- **Scheduler**: Custom Learning Rate Scheduler  
-  → Warmup + Reduce on Plateau
-- **Epochs**: 50  
-- **Early Stopping**: Patience = 5  
-- **Dropout**: 0.7
-- **Class Weights** (computed to handle imbalance):
-  - `No Cancer`: 0.9379
-  - `Breast Cancer`: 1.0731
-  - `Prostate Cancer`: 0.9981
+### 📌 Loss Function – Focal Loss
+
+This project uses **Focal Loss** instead of standard categorical cross-entropy to address **class imbalance**—a common challenge in medical imaging.
+
+**Why Focal Loss?**
+
+- In imbalanced datasets, standard loss functions can be dominated by frequent classes.
+- **Focal Loss** down-weights easy examples and focuses more on hard, misclassified cases.
+
+**Formula**:
+
+> `FL(p_t) = -α_t * (1 - p_t)^γ * log(p_t)`
+
+- **α (alpha)** balances the importance of each class  
+  → Here: `[0.5, 0.3, 0.2]` for `No Cancer`, `Breast Cancer`, `Prostate Cancer`
+- **γ (gamma)** controls the focus on hard examples  
+  → Here: `γ = 2.0` (default in many implementations)
+
+This encourages the model to pay more attention to underrepresented or harder-to-classify classes, such as `Breast Cancer`.
+
+---
+
+### 🔁 Learning Rate Scheduler – Warmup & Decay
+
+A **custom learning rate schedule** is used to stabilize training and prevent convergence to poor minima early on.
+
+#### 🔹 Warmup Phase
+
+- **Epochs 1–5**: Learning rate = `5e-5`  
+  → A small but stable rate to “warm up” the model
+
+#### 🔹 Main Phase
+
+- **Epochs 6–14**: Learning rate increases to `1e-4`  
+  → Allows faster learning after warmup
+
+- **Epochs 15–24**: Decay begins, reducing LR back to `5e-5`
+
+- **Epochs 25+**: Final decay stage with LR = `1e-5`  
+  → Stabilizes convergence and prevents overshooting
+
+Combined with **ReduceLROnPlateau** and **EarlyStopping**, this ensures adaptive and controlled learning across 50 epochs.
+
+---
+
+### 🏋️ Class Weights
+
+To handle **class imbalance**, weights are computed using `sklearn.utils.class_weight`:
+
+| Class            | Weight  |
+|------------------|---------|
+| No Cancer        | 0.9379  |
+| Breast Cancer    | 1.0731  |
+| Prostate Cancer  | 0.9981  |
+
+These weights are integrated into the training process to emphasize underrepresented classes during backpropagation.
 
 ---
 
@@ -89,13 +131,34 @@ The model is built on the **InceptionResNetV2** architecture with **RadImageNet 
 
 ---
 
-## 🧪 Training History Snapshot
+## 📷 Results
 
-- Best validation accuracy: **0.7414**
-- Early stopping kicked in at epoch 50
-- Model saved as: `frozen_model.h5`
+### 📈 Accuracy Over Epochs
+
+![Accuracy Plot](results/accuracy plot.png)
+
+### 📉 Confusion Matrix
+
+![Confusion Matrix](results/cm matrix.png)
+
+### 📊 ROC Curve
+
+![ROC Curve](results/roc curve].png)
 
 ---
 
 ## 📁 Project Structure
 
+📁 project-root/
+
+┣ 📁 results/ ← Visual outputs (plots & metrics)
+
+┃ ┣ 📷 accuracy plot.png
+
+┃ ┣ 📷 cm matrix.png
+
+┃ ┗ 📷 roc curve].png
+
+┣ 📄 README.md ← Project documentation
+
+┗ 📓 inception-over-resnet-80.ipynb ← Training, evaluation, and results
