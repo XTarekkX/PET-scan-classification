@@ -46,7 +46,7 @@ The model is built on the **InceptionResNetV2** architecture with **RadImageNet 
 > ✍️ All labels were **manually annotated** by the research team using medical knowledge and tools.
 
 > ⚠️ **Disclaimer**:
-> - The annotations were **not performed by licensed medical professionals**.
+> - The annotations were **not fully performed by licensed medical professionals**.
 > - This dataset is intended for **academic and research purposes only**.
 > - Any clinical usage, redistribution, or commercial use is **prohibited**.
 
