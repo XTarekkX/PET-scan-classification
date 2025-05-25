@@ -135,15 +135,16 @@ These weights are integrated into the training process to emphasize underreprese
 
 ### 📈 Accuracy Over Epochs
 
-![Accuracy Plot](results/accuracy plot.png)
+![Accuracy Plot](https://github.com/XTarekkX/PET-scan-classification/raw/main/results/accuracy%20plot.png)
 
 ### 📉 Confusion Matrix
 
-![Confusion Matrix](results/cm matrix.png)
+![Confusion Matrix](https://github.com/XTarekkX/PET-scan-classification/raw/main/results/cm%20matrix.png)
 
 ### 📊 ROC Curve
 
-![ROC Curve](results/roc curve].png)
+![ROC Curve](https://github.com/XTarekkX/PET-scan-classification/raw/main/results/roc%20curve%5D.png)
+
 
 ---
 
@@ -162,3 +163,21 @@ These weights are integrated into the training process to emphasize underreprese
 ┣ 📄 README.md ← Project documentation
 
 ┗ 📓 inception-over-resnet-80.ipynb ← Training, evaluation, and results
+
+
+---
+
+## 📌 Future Improvements
+
+- Incorporate additional cancer types or multimodal data (e.g., PET + CT)
+- Train with expert-annotated datasets to improve medical reliability
+- Use model explainability tools like **Grad-CAM** for visual justification
+- Package into a deployable clinical decision support tool
+
+---
+
+## 📜 License
+
+This project is intended for **educational and research purposes only**.  
+Use of this dataset or model for clinical diagnosis, treatment, or commercial applications is **strictly prohibited**.
+
