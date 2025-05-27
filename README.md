@@ -18,6 +18,8 @@ The model is built on the **InceptionResNetV2** architecture with **RadImageNet 
 > https://github.com/BMEII-AI/RadImageNet  
 > 📦 **Weights Used (Kaggle Dataset)**:  
 > https://www.kaggle.com/datasets/ipythonx/notop-wg-radimagenet/data
+> 📦 **Weights Resulted**:
+> https://drive.google.com/drive/folders/15A0v1cORPAyfY6hsy7XJYqxlDKh17QCL?usp=drive_link
 
 ### Model Summary
 
